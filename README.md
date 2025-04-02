@@ -78,13 +78,13 @@ EXAMPLE:
 ### Output description
 Output of `predictor.py` and `predictor.sh` is in .**csv** format containing possibility of Ψ modification.
 
-| Column Name  | Description                  |
-|--------------|------------------------------|
+| Column Name  | Description                 |
+|--------------|-----------------------------|
 | chrom        | Chromosome name or identifier|
-| start        | Start position of the motif  |
-| end          | End position of the motif    |
-| motif        | The specific motif sequence  |
-| strand       | Strand orientation (+ or -)  |
+| start        | Start position  |
+| end          | End position    |
+| motif        | The specific motif sequence |
+| strand       | Strand orientation (+ or -) |
 | possibility  | Probability or confidence score |
 
 ### Example
