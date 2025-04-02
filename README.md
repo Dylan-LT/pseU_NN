@@ -27,7 +27,7 @@ pip install -r requirement.txt
 ## Manual
 We have provided two scripts: `predictor.py` and `predictor.sh`. The `predictor.py` script is designed to predict secondary structure files in bpseq format. The `predictor.sh` script is intended for directly processing sequences (recommended method).
 
-#### Input files preparation
+### Input files preparation
 The input files required by `predictor.py` are directory containing RNA secondary structure file in **BPSEQ** format named sequence_1.bpseq to sequence_n.bpseq (optional information file: in .**bed** format with exact same order of file in input directory).
 ```
 NZ_CP040539.1   352254  352255  .       .       +
