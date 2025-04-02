@@ -1,5 +1,5 @@
 # pseU_NN
-A hybrid transformer-GNN architecture that combines structural feature extraction with multi-head attention mechanisms on sequence to predict potential Ψ modifications.
+A hybrid transformer-GNN architecture that integrates RNA secondary structural features with sequence information to predict potential pseudouridine (Ψ) modifications in bacterial transcriptomes.
 
 ## Workflow
 
@@ -17,7 +17,7 @@ conda create -n PseU_NN_env python=3.10
 conda activate PseU_NN_env
 ```
 
-## 2. Install from PIP
+## 2. Install from pip
 ```
 git clone https://github.com/Dylan-LT/pseU_NN
 pip install -r requirement.txt
