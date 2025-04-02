@@ -25,20 +25,20 @@ pip install -r requirement.txt
 ```
 
 ## Manual
+We have provided two scripts: `predictor.py` and `predictor.sh`. The `predictor.py` script is designed to predict secondary structure files in bpseq format. The `predictor.sh` script is intended for directly processing sequences (recommended method).
 
-### Input
+#### Input files preparation
 The input files required by `predictor.py` are directory containing RNA secondary structure file in **BPSEQ** format named sequence_1.bpseq to sequence_n.bpseq (optional information file: in .**bed** format with exact same order of file in input directory).
 ```
 NZ_CP040539.1   352254  352255  .       .       +
 ```
 The input files for `predictor.sh` are a **genome sequence reference** file (in .**fa**, .**fasta**, or .**fna** format) and an **annotation** file (in .**gff** format). 
 
-### Predictor
-The `predictor.py` module calculates the probability of 61-nucleotide RNA segment contains pseudouridine modifications.
+### Command options
+The `predictor.py` module calculates the probability of **61-nucleotide** RNA segment contains pseudouridine modifications.
 To view the available options for this script, run `python predictor.py -h` in the command line.
-The `predictor.sh` module identifies unique pseudouridine-containing motifs and scans the provided FASTA file for matches, filtering for overlaps with coding sequences. It then processes each identified motif to predict all potential pseudouridine modification sites across the genome.
-#### Options
-`predictor.py`
+
+#### predictor.py
 ```
 usage: predictor.py [-h] [-i INPUT_FOLDER] [--model MODEL] [-o OUTPUT] [--batch_size BATCH_SIZE] [--bed BED] [--subsample_number SUBSAMPLE_NUMBER] [--device DEVICE]
 
@@ -58,7 +58,8 @@ options:
                         Subsample number if required
   --device DEVICE       Device name
 ```
-`predictor.sh`
+#### predictor.sh
+The `predictor.sh` module identifies unique pseudouridine-containing motifs and scans the provided FASTA file for matches, filtering for overlaps with coding sequences. It then processes each identified motif to predict all potential pseudouridine modification sites across the genome.
 ```
 Usage: predictor.sh <input_fasta> <input_gff> <output_tsv>
 
@@ -74,34 +75,23 @@ ARGUMENTS:
 EXAMPLE:
     predictor.sh genome.fasta annotation.gff results.tsv
 ```
-#### Output description
-Output of `predictor.py` is in .**csv** format containing posibiliy of Ψ modificaiton
-```
-chrom,start,end,motif,strand,posibility
+### Output description
+Output of `predictor.py` and `predictor.sh` is in .**csv** format containing possibility of Ψ modification.
 
+| Column Name  | Description                  |
+|--------------|------------------------------|
+| chrom        | Chromosome name or identifier|
+| start        | Start position of the motif  |
+| end          | End position of the motif    |
+| motif        | The specific motif sequence  |
+| strand       | Strand orientation (+ or -)  |
+| possibility  | Probability or confidence score |
+
+### Example
+We have included sample data to facilitate testing and comprehension of our script.
 ```
-#### Example
-`predictor.py`
-```
+# run predictor.py
 python predictor.py -i data/test1/bpseq/ --bed data/test1/test.bed -o data/test1/test --device cuda:0 --model model.pth
-cat data/test1/test/test.csv
-
-chrom,start,end,motif,strand,posibility
-NZ_CP040539.1,352254,352255,.,+,0.88555264
-```
-`predictor.sh`
-```
+# run predictor.sh
 bash predictor.sh data/test2/fasta.fa data/test2/genomic.gff data/test2/results.csv
-head data/test2/results.csv
-
-chrom,start,end,motif,strand,posibility
-NZ_CP034551.1,1004,1065,ATTAT,+,0.07031111
-NZ_CP034551.1,1006,1067,TATTC,+,0.08671252
-NZ_CP034551.1,1007,1068,ATTCC,+,0.07755394
-NZ_CP034551.1,1014,1075,ATTCT,+,0.23386548
-NZ_CP034551.1,1028,1089,ATTAT,+,0.21419106
-NZ_CP034551.1,1030,1091,TATCT,+,0.94438654
-NZ_CP034551.1,1032,1093,TCTCT,+,0.4426876
-NZ_CP034551.1,1034,1095,TCTAT,+,0.50899804
-NZ_CP034551.1,1036,1097,TATTT,+,0.11317582
 ```
