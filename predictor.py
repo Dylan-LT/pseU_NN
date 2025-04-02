@@ -62,6 +62,7 @@ def main(input_file, model_file, bedfile, output_file, batch_size, device,file_n
     input_file,file_names = read_file(input_file,file_number)
     model = transformer_GNN(61).to(device)
     model.load_state_dict(torch.load(model_file, map_location=torch.device(device)))
+    model.eval()
     test_dataset = DataLoader(input_file, batch_size=batch_size, shuffle=False)
     batch_number = len(input_file)//batch_size + 1
     print('Start to predict ...')
@@ -77,16 +78,21 @@ def main(input_file, model_file, bedfile, output_file, batch_size, device,file_n
     df = pd.DataFrame(result.cpu().numpy(),columns=['predictions'])
     df['seq_name'] = file_names
     df['seq_num'] = df['seq_name'].str.extract('sequence_(\d+)').astype(int)
-    df = df.sort_values('seq_num')
-    print(df[:,3])
-    df = df[['seq_name', 'predictions']].reset_index(drop=True)
-    df = df[['seq_name','predictions']]
-    bed_df = pd.read_csv(bedfile, sep='\t', header=None,
-                     names=['chrom', 'start', 'end', 'motif', 'score', 'strand'])
-    bed_df['predictions'] = df['predictions']
-    if output_file.split('.')[-1]!='csv':
-        output_file = output_file+'.csv'
-    bed_df.to_csv(output_file,index=False)
+    if bedfile is not None:
+        df = df.sort_values('seq_num')
+        df = df[['seq_name', 'predictions']].reset_index(drop=True)
+        df = df[['seq_name','predictions']]
+        bed_df = pd.read_csv(bedfile, sep='\t', header=None,
+                        names=['chrom', 'start', 'end', 'motif', 'score', 'strand'])
+        bed_df['predictions'] = df['predictions']
+        if output_file.split('.')[-1]!='csv':
+            output_file = output_file+'.csv'
+        bed_df.to_csv(output_file,index=False)
+    else:
+        df = df[['seq_name', 'predictions']]
+        if output_file.split('.')[-1]!='csv':
+            output_file = output_file+'.csv'
+        df.to_csv(output_file,index=False)
     print('Saved as '+ output_file)
 
 if __name__ == "__main__":
@@ -100,6 +106,5 @@ if __name__ == "__main__":
     parser.add_argument('--device', type=str, help='Device name', default='cpu')
     args = parser.parse_args()
     main(args.input_folder, args.model, args.bed, args.output, args.batch_size, args.device, args.subsample_number)
-
 
 
