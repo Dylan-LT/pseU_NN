@@ -57,7 +57,7 @@ options:
   --device DEVICE       Device name
 ```
 #### Output description
-Output of `predictor.py` is in .**csv** format.
+Output of `predictor.py` is in .**csv** format containing posibiliy of Ψ modificaiton
 ```
 chrom,start,end,motif,strand,posibility
 
