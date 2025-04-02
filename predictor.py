@@ -80,14 +80,14 @@ def main(input_file, model_file, bedfile, output_file, batch_size, device,file_n
     df['seq_num'] = df['seq_name'].str.extract('sequence_(\d+)').astype(int)
     if bedfile is not None:
         df = df.sort_values('seq_num')
-        df = df[['seq_name', 'predictions']].reset_index(drop=True)
-        df = df[['seq_name','predictions']]
         bed_df = pd.read_csv(bedfile, sep='\t', header=None,
                         names=['chrom', 'start', 'end', 'motif', 'score', 'strand'])
-        bed_df['predictions'] = df['predictions']
+        bed_df['seq_num'] = np.arange(len(bed_df))
+        merged_df = pd.merge(bed_df, df, on='seq_num', how='inner')
+        merged_df=merged_df[['chrom', 'start', 'end', 'motif', 'strand','predictions']]
         if output_file.split('.')[-1]!='csv':
             output_file = output_file+'.csv'
-        bed_df.to_csv(output_file,index=False)
+        merged_df.to_csv(output_file,index=False)
     else:
         df = df[['seq_name', 'predictions']]
         if output_file.split('.')[-1]!='csv':
