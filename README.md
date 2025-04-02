@@ -4,7 +4,7 @@ A hybrid transformer-GNN architecture that integrates RNA secondary structural f
 ## Workflow
 
 <div align="center">
-  <img src="document/workflow.png" width="300" alt="Workflow">
+  <img src="document/model.png" width="300" alt="model">
 </div>
 
 
