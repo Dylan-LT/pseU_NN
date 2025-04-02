@@ -13,8 +13,9 @@ A hybrid transformer-GNN architecture that integrates RNA secondary structural f
 ## 1. Create a conda env
 pseU_NN has been primarily trained and tested on Python **3.10**, with additional test runs conducted across Python versions **3.9** to **3.11**.
 ```
-conda create -n PseU_NN_env python=3.10
+conda create -n PseU_NN_env python=3.10 
 conda activate PseU_NN_env
+conda install -c bioconda bedtools=2.30.0 seqkit=2.9.0 
 ```
 
 ## 2. Install from pip
@@ -25,12 +26,15 @@ pip install -r requirement.txt
 
 ## Manual
 
-### Preprocessing
-The input files required by pseU_NN are a **genome sequence reference** file (in .**fa**, .**fasta**, or .**fna** format) and an **annotation** file (in .**gff** format). 
-pseU_NN will extract each thymine (T) within the **coding regions** and use it as input for the subsequent pipeline.
+### Input
+The input files required by `predictor.py` are directory containing RNA secondary structure file in **BPSEQ** format (optional: information file in .**bed** format with exxact same order of file in input directory).
+```
+NZ_CP040539.1   352254  352255  .       .       +
+```
+The input files for `predictor.sh` are a **genome sequence reference** file (in .**fa**, .**fasta**, or .**fna** format) and an **annotation** file (in .**gff** format). 
 
-### Predictor
-`predictor.py` is utilized to predict all sequences within the coding region and calculate the probability for each qualifying U site.
+### Predictor.py
+The `predictor.py` module calculates the probability of 61-nucleotide RNA segment contains pseudouridine modifications.
 To view the available options for this script, run `python predictor.py -h` in the command line.
 #### Options
 ```
@@ -53,5 +57,16 @@ options:
   --device DEVICE       Device name
 ```
 #### Output description
+Output of `predictor.py` is in .**csv** format.
+```
+chrom,start,end,motif,strand,posibility
 
+```
 #### Example
+```
+python predictor.py -i bpseq/ --bed test.bed -o test --device cuda:0 --model model.pth
+cat test.csv
+
+chrom,start,end,motif,strand,posibility
+NZ_CP040539.1,352254,352255,.,+,0.88555264
+```
