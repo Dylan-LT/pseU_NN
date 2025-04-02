@@ -4,11 +4,17 @@ from torch.nn import functional as F
 from tqdm.auto import tqdm
 import torch
 import torch.nn as nn
+import random
+import numpy as np
 
 BASES = ['A', 'U', 'C', 'G']
 BASE_TO_INDEX = {base: idx for idx, base in enumerate(BASES)}
 SEQUENCE_LENGTH = 61
 num_nodes = SEQUENCE_LENGTH
+seed = 42
+torch.manual_seed(seed)          
+np.random.seed(seed)             
+random.seed(seed)
 class DenseGraphEncoder(nn.Module):
     def __init__(self, output_dim):
         super(DenseGraphEncoder, self).__init__()
