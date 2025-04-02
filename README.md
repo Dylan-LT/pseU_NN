@@ -53,6 +53,5 @@ options:
   --device DEVICE       Device name
 ```
 #### Output description
-xxxx
+
 #### Example
-xxxxx
