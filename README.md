@@ -21,21 +21,22 @@ conda install -c bioconda bedtools=2.30.0 seqkit=2.9.0
 ## 2. Install from pip
 ```
 git clone https://github.com/Dylan-LT/pseU_NN
+cd pseU_NN/
 pip install -r requirement.txt
 ```
 
 ## Manual
-We have provided two scripts: `predictor.py` and `predictor.sh`. The `predictor.py` script is designed to predict secondary structure files in bpseq format. The `predictor.sh` script is intended for directly processing sequences (recommended method).
+We have provided two scripts: `predictor.py` and `predictor.sh`. The `predictor.py` script is designed to predict secondary structure files in bpseq format. The `predictor.sh` script is intended to process sequences directly (**recommended method**).
 
 ### Input files preparation
-The input files required by `predictor.py` are directory containing RNA secondary structure file in **BPSEQ** format named sequence_1.bpseq to sequence_n.bpseq (optional information file: in .**bed** format with exact same order of file in input directory).
+The input files required by `predictor.py` are directories containing RNA secondary structure files in **BPSEQ** format named sequence_1.bpseq to sequence_n.bpseq (optional information file: in .**bed** format with exact same order of file in input directory).
 ```
 NZ_CP040539.1   352254  352255  .       .       +
 ```
 The input files for `predictor.sh` are a **genome sequence reference** file (in .**fa**, .**fasta**, or .**fna** format) and an **annotation** file (in .**gff** format). 
 
 ### Command options
-The `predictor.py` module calculates the probability of **61-nucleotide** RNA segment contains pseudouridine modifications.
+The `predictor.py` module calculates the probability of **61-nucleotide** RNA segment containing pseudouridine modifications.
 To view the available options for this script, run `python predictor.py -h` in the command line.
 
 #### predictor.py
@@ -76,7 +77,7 @@ EXAMPLE:
     predictor.sh genome.fasta annotation.gff results.tsv
 ```
 ### Output description
-Output of `predictor.py` and `predictor.sh` is in .**csv** format containing possibility of Ψ modification.
+The output of `predictor.py` and `predictor.sh` is in .**csv** format containing the possibility of Ψ modification.
 
 | Column Name  | Description                 |
 |--------------|-----------------------------|
