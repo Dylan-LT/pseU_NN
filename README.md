@@ -73,7 +73,7 @@ ARGUMENTS:
     <output_tsv>  : Output TSV filename (prediction results)
 
 EXAMPLE:
-    predictor.sh genome.fasta annotation.gff results.tsv
+    scanner.sh genome.fasta annotation.gff results.tsv
 ```
 ### Output description
 The output of `predictor.py` and `scanner.sh` is in .**csv** format containing the possibility of Ψ modification.
