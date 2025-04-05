@@ -11,7 +11,7 @@ A hybrid transformer-GNN architecture that integrates RNA secondary structural f
 ## Installation
 
 ## 1. Create a conda env
-pseU_NN has been primarily trained and tested on Python **3.10**, with additional test runs conducted across Python versions **3.9** to **3.11**.
+pseU_NN has been primarily trained and tested on Python **3.10**, with additional test runs conducted across Python versions **3.9** to **3.11**. The MXfold2 (https://github.com/mxfold/mxfold2) is required to be installed.
 ```
 conda create -n PseU_NN_env python=3.10 
 conda activate PseU_NN_env
