@@ -26,14 +26,14 @@ pip install -r requirement.txt
 ```
 
 ## Manual
-We have provided two scripts: `predictor.py` and `predictor.sh`. The `predictor.py` script is designed to predict secondary structure files in bpseq format. The `predictor.sh` script is intended to process sequences directly (**recommended method**).
+We have provided two scripts: `predictor.py` and `scanner.sh`. The `predictor.py` script is designed to predict secondary structure files in bpseq format. The `scanner.sh` script is intended to process sequences directly (**recommended method**).
 
 ### Input files preparation
-The input files required by `predictor.py` are directories containing RNA secondary structure files in **BPSEQ** format named sequence_1.bpseq to sequence_n.bpseq (optional information file: in .**bed** format with exact same order of file in input directory).
+The input files required by `predictor.py` are directories containing RNA secondary structure files in **BPSEQ** format named sequence_1.bpseq to sequence_n.bpseq (optional information file: in .**bed** format with exact same order of file in input directory). 
 ```
 NZ_CP040539.1   352254  352255  .       .       +
 ```
-The input files for `predictor.sh` are a **genome sequence reference** file (in .**fa**, .**fasta**, or .**fna** format) and an **annotation** file (in .**gff** format). 
+The input files for `scanner.sh` are a **genome sequence reference** file (in .**fa**, .**fasta**, or .**fna** format) and an **annotation** file (in .**gff** format). 
 
 ### Command options
 The `predictor.py` module calculates the probability of **61-nucleotide** RNA segment containing pseudouridine modifications.
@@ -59,10 +59,10 @@ options:
                         Subsample number if required
   --device DEVICE       Device name
 ```
-#### predictor.sh
-The `predictor.sh` module identifies unique pseudouridine-containing motifs and scans the provided FASTA file for matches, filtering for overlaps with coding sequences. It then processes each identified motif to predict all potential pseudouridine modification sites across the genome.
+#### scanner.sh
+The `scanner.sh` module identifies unique pseudouridine-containing motifs and scans the provided FASTA file for matches, filtering for overlaps with coding sequences. It then processes each identified motif to predict all potential pseudouridine modification sites across the genome.
 ```
-Usage: predictor.sh <input_fasta> <input_gff> <output_tsv>
+Usage: scanner.sh <input_fasta> <input_gff> <output_tsv>
 
 DESCRIPTION:
     Pipeline for pseudouridine site prediction in bacterial RNA.
@@ -76,7 +76,7 @@ EXAMPLE:
     predictor.sh genome.fasta annotation.gff results.tsv
 ```
 ### Output description
-The output of `predictor.py` and `predictor.sh` is in .**csv** format containing the possibility of Ψ modification.
+The output of `predictor.py` and `scanner.sh` is in .**csv** format containing the possibility of Ψ modification.
 
 | Column Name  | Description                 |
 |--------------|-----------------------------|
@@ -92,6 +92,6 @@ We have included sample data to facilitate testing and comprehension of our scri
 ```
 # run predictor.py
 python predictor.py -i data/test1/bpseq/ --bed data/test1/test.bed -o data/test1/test --device cuda:0 --model model.pth
-# run predictor.sh
-bash predictor.sh data/test2/fasta.fa data/test2/genomic.gff data/test2/results.csv
+# run scanner.sh
+bash scanner.sh data/test2/fasta.fa data/test2/genomic.gff data/test2/results.csv
 ```
