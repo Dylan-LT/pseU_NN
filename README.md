@@ -66,10 +66,9 @@ Usage: predictor.sh <input_fasta> <input_gff> <output_tsv>
 
 DESCRIPTION:
     Pipeline for pseudouridine site prediction in bacterial RNA.
-    [Rest of your description...]
 
 ARGUMENTS:
-    <input_fasta> : FASTA file (bacterial genome)
+    <input_fasta> : FASTA file
     <input_gff>   : GFF file containing coding region annotations
     <output_tsv>  : Output TSV filename (prediction results)
 
