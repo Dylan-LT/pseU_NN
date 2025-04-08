@@ -14,7 +14,7 @@ parser.add_argument('-i','--input_folder', type=str, help='Directory path to inp
 parser.add_argument('--model', type=str, help='Path to the model file',default='model.pth')
 parser.add_argument('-o','--output', type=str, help='Output csv path',default='output.csv')
 parser.add_argument('--batch_size', type=int, help='batch_size of input feature', default=500)
-parser.add_argument('--len', type=int, help='length used 20/30nt', default=30)
+parser.add_argument('--len', type=int, help='Nucleotides to expand from modificaiton site 20/30nt', default=30)
 parser.add_argument('--bed', type=str, help='bed file used to extract sequence')
 parser.add_argument('--subsample_number', type=int, help='Subsample number if required', default=None)
 parser.add_argument('--device', type=str, help='Device name', default='cpu')

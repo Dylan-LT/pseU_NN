@@ -55,7 +55,7 @@ options:
                         Output csv path
   --batch_size BATCH_SIZE
                         batch_size of input feature
-  --len LEN             length used 20/30nt
+  --len LEN             Nucleotides to expand from modificaiton site 20/30nt
   --bed BED             bed file used to extract sequence
   --subsample_number SUBSAMPLE_NUMBER
                         Subsample number if required
