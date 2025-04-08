@@ -73,7 +73,7 @@ ARGUMENTS:
     <input_gff>   : GFF file containing coding region annotations
     <output_tsv>  : Output TSV filename (prediction results)
     <model_path>  : Path to the trained model file
-    <expand_size> : Nucleotides to expand from modificaiton site (20/30)
+    <expand_size> : Nucleotides to expand from modificaiton site (20/30nt)
 EXAMPLE:
     predictor.sh genome.fasta annotation.gff results.tsv model41nt.pth 20
 ```
