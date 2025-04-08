@@ -41,7 +41,8 @@ To view the available options for this script, run `python predictor.py -h` in t
 
 #### predictor.py
 ```
-usage: predictor.py [-h] [-i INPUT_FOLDER] [--model MODEL] [-o OUTPUT] [--batch_size BATCH_SIZE] [--bed BED] [--subsample_number SUBSAMPLE_NUMBER] [--device DEVICE]
+usage: predictor.py [-h] [-i INPUT_FOLDER] [--model MODEL] [-o OUTPUT] [--batch_size BATCH_SIZE] [--len LEN] [--bed BED]
+                    [--subsample_number SUBSAMPLE_NUMBER] [--device DEVICE]
 
 Process some integers.
 
@@ -54,6 +55,7 @@ options:
                         Output csv path
   --batch_size BATCH_SIZE
                         batch_size of input feature
+  --len LEN             length used 20/30nt
   --bed BED             bed file used to extract sequence
   --subsample_number SUBSAMPLE_NUMBER
                         Subsample number if required
