@@ -62,18 +62,20 @@ options:
 #### scanner.sh
 The `scanner.sh` module identifies unique pseudouridine-containing motifs and scans the provided FASTA file for matches, filtering for overlaps with coding sequences. It then processes each identified motif to predict all potential pseudouridine modification sites across the genome.
 ```
-Usage: scanner.sh <input_fasta> <input_gff> <output_tsv>
+Usage: predictor.sh <input_fasta> <input_gff> <output_tsv>
 
 DESCRIPTION:
     Pipeline for pseudouridine site prediction in bacterial RNA.
+    [Rest of your description...]
 
 ARGUMENTS:
-    <input_fasta> : FASTA file
+    <input_fasta> : FASTA file (bacterial genome)
     <input_gff>   : GFF file containing coding region annotations
     <output_tsv>  : Output TSV filename (prediction results)
-
+    <model_path>  : Path to the trained model file
+    <expand_size> : Nucleotides to expand from modificaiton site (20/30)
 EXAMPLE:
-    scanner.sh genome.fasta annotation.gff results.tsv
+    predictor.sh genome.fasta annotation.gff results.tsv model41nt.pth 20
 ```
 ### Output description
 The output of `predictor.py` and `scanner.sh` is in .**csv** format containing the possibility of Ψ modification.
@@ -91,7 +93,7 @@ The output of `predictor.py` and `scanner.sh` is in .**csv** format containing t
 We have included sample data to facilitate testing and comprehension of our script.
 ```
 # run predictor.py
-python predictor.py -i data/test1/bpseq/ --bed data/test1/test.bed -o data/test1/test --device cuda:0 --model model.pth
+python predictor.py -i data/test1/bpseq/ --bed data/test1/test.bed -o data/test1/test --device cuda:0 --model model61nt.pth
 # run scanner.sh
 bash scanner.sh data/test2/fasta.fa data/test2/genomic.gff data/test2/results.csv
 ```
