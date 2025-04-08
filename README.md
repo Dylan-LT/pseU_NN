@@ -95,5 +95,5 @@ We have included sample data to facilitate testing and comprehension of our scri
 # run predictor.py
 python predictor.py -i data/test1/bpseq/ --bed data/test1/test.bed -o data/test1/test --device cuda:0 --model model61nt.pth
 # run scanner.sh
-bash scanner.sh data/test2/fasta.fa data/test2/genomic.gff data/test2/results.csv
+bash scanner.sh data/test2/fasta.fa data/test2/genomic.gff data/test2/results.csv model41nt.pth 20
 ```
