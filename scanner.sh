@@ -111,7 +111,6 @@ main() {
         -wo \
         | awk 'BEGIN{OFS="\t"}{print $1,$2,$3,$4,$5,$6}' \
         | sort -u > "${temp_files[4]}"
-    head ${temp_files[4]}
     # Extract sequences
     bedtools getfasta -fi "$input_fasta" -bed "${temp_files[4]}" -s \
         | seqkit seq -t dna --dna2rna > "${temp_files[5]}"
