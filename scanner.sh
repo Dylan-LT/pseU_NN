@@ -9,7 +9,6 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 
 readonly EXPAND_SIZE=30
 readonly MOTIF_FILE="${SCRIPT_DIR}/uniqmotif.seq"
-readonly MODEL_PATH="${SCRIPT_DIR}/model.pth"
 readonly PREDICTOR_SCRIPT="${SCRIPT_DIR}/predictor.py"
 ###############################################################################
 # FUNCTIONS
@@ -59,6 +58,7 @@ main() {
     local input_fasta="$1"
     local input_gff="$2"
     local output_tsv="$3"
+    local MODEL_PATH="$4"
 
     for file in "$input_fasta" "$input_gff" "$MOTIF_FILE"; do
         if [[ ! -f "$file" ]]; then
