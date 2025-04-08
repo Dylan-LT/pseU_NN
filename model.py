@@ -9,14 +9,12 @@ import numpy as np
 
 BASES = ['A', 'U', 'C', 'G']
 BASE_TO_INDEX = {base: idx for idx, base in enumerate(BASES)}
-SEQUENCE_LENGTH = 61
-num_nodes = SEQUENCE_LENGTH
 seed = 42
 torch.manual_seed(seed)          
 np.random.seed(seed)             
 random.seed(seed)
 class DenseGraphEncoder(nn.Module):
-    def __init__(self, output_dim):
+    def __init__(self,num_nodes, output_dim):
         super(DenseGraphEncoder, self).__init__()
         self.graph_conv1 = DenseGraphConv(len(BASES) + num_nodes, 128, aggr='add') 
         self.act1 = nn.ReLU()
@@ -51,7 +49,7 @@ class transformer_GNN(nn.Module):
         self.w1 = nn.Parameter(torch.tensor(0.5))
 
         gnn_output_dim = 64
-        self.gnn_encoder = DenseGraphEncoder(gnn_output_dim)
+        self.gnn_encoder = DenseGraphEncoder(num_nodes,gnn_output_dim)
 
         self.fc_cnn = nn.Sequential(
             nn.Linear(gnn_output_dim, hidden_dim),
@@ -115,3 +113,4 @@ class transformer_GNN(nn.Module):
     def weighted_sum_fusion(self, adj_x, seq_x):  
         fused = torch.cat((self.w1*adj_x ,(1-self.w1) * seq_x),dim=1)
         return fused 
+

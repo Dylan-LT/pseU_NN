@@ -24,9 +24,10 @@ ARGUMENTS:
     <input_fasta> : FASTA file (bacterial genome)
     <input_gff>   : GFF file containing coding region annotations
     <output_tsv>  : Output TSV filename (prediction results)
-
+    <model_path>  : Path to the trained model file
+    <expand_size> : Nucleotides to expand from modificaiton site (20nt/30nt)
 EXAMPLE:
-    $(basename "$0") genome.fasta annotation.gff results.tsv
+    $(basename "$0") genome.fasta annotation.gff results.tsv model41nt.pth 20
 EOF
     exit 1
 }
@@ -41,10 +42,10 @@ check_dependencies() {
     done
 }
 
-#cleanup() {
-    #rm -f "${temp_files[@]}"
+cleanup() {
+    rm -f "${temp_files[@]}"
     #rm -rf "$structure_dir"
-#}
+}
 
 ###############################################################################
 # MAIN SCRIPT
@@ -126,6 +127,7 @@ main() {
         -i "$bpseq_dir/" \
         --model "$MODEL_PATH" \
         --bed "${temp_files[4]}"\
+        --len "$EXPAND_SIZE" \
         -o "$output_tsv" \
         --device cuda:0
 

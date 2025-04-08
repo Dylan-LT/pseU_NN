@@ -8,10 +8,22 @@ from model import transformer_GNN
 from tqdm import tqdm
 import torch
 
+
+parser = argparse.ArgumentParser(description='Process some integers.')
+parser.add_argument('-i','--input_folder', type=str, help='Directory path to input files')
+parser.add_argument('--model', type=str, help='Path to the model file',default='model.pth')
+parser.add_argument('-o','--output', type=str, help='Output csv path',default='output.csv')
+parser.add_argument('--batch_size', type=int, help='batch_size of input feature', default=500)
+parser.add_argument('--len', type=int, help='length used 20/30', default=30)
+parser.add_argument('--bed', type=str, help='bed file used to extract sequence')
+parser.add_argument('--subsample_number', type=int, help='Subsample number if required', default=None)
+parser.add_argument('--device', type=str, help='Device name', default='cpu')
+args = parser.parse_args()
+
+
 BASES = ['A', 'U', 'C', 'G']
 BASE_TO_INDEX = {base: idx for idx, base in enumerate(BASES)}
-SEQUENCE_LENGTH = 61
-
+SEQUENCE_LENGTH = args.len*2+1
 
 def read_file(directory_path,file_number):
     file_names = os.listdir(directory_path)
@@ -58,9 +70,9 @@ def read_file(directory_path,file_number):
         num_file += 1
     return data_list,file_names[:num_file]
 
-def main(input_file, model_file, bedfile, output_file, batch_size, device,file_number):
+def main(input_file, model_file, bedfile, output_file, batch_size,length, device,file_number):
     input_file,file_names = read_file(input_file,file_number)
-    model = transformer_GNN(61).to(device)
+    model = transformer_GNN(length*2+1).to(device)
     model.load_state_dict(torch.load(model_file, map_location=torch.device(device)))
     model.eval()
     test_dataset = DataLoader(input_file, batch_size=batch_size, shuffle=False)
@@ -75,36 +87,28 @@ def main(input_file, model_file, bedfile, output_file, batch_size, device,file_n
             result = torch.cat((result, out), dim=0)
             pbar.update(1)
     pbar.close()
-    df = pd.DataFrame(result.cpu().numpy(),columns=['predictions'])
+    df = pd.DataFrame(result.cpu().numpy(),columns=['posibility'])
     df['seq_name'] = file_names
     df['seq_num'] = df['seq_name'].str.extract('sequence_(\d+)').astype(int)
     if bedfile is not None:
-        df = df.sort_values('seq_num')
+        df = df.sort_values('seq_num').reset_index(drop=True)
         bed_df = pd.read_csv(bedfile, sep='\t', header=None,
-                        names=['chrom', 'start', 'end', 'motif', 'score', 'strand'])
-        bed_df['seq_num'] = np.arange(len(bed_df))
+                        names=['chrom', 'start', 'end', 'motif', '.', 'strand'])
+        bed_df['seq_num'] = np.arange(len(bed_df))+1
         merged_df = pd.merge(bed_df, df, on='seq_num', how='inner')
-        merged_df=merged_df[['chrom', 'start', 'end', 'motif', 'strand','predictions']]
+        merged_df=merged_df[['chrom', 'start', 'end', 'motif', 'strand','posibility']]
         if output_file.split('.')[-1]!='csv':
             output_file = output_file+'.csv'
         merged_df.to_csv(output_file,index=False)
     else:
-        df = df[['seq_name', 'predictions']]
+        df = df[['seq_name', 'posibility']]
         if output_file.split('.')[-1]!='csv':
             output_file = output_file+'.csv'
         df.to_csv(output_file,index=False)
     print('Saved as '+ output_file)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Process some integers.')
-    parser.add_argument('-i','--input_folder', type=str, help='Directory path to input files')
-    parser.add_argument('--model', type=str, help='Path to the model file',default='model.pth')
-    parser.add_argument('-o','--output', type=str, help='Output csv path',default='output.csv')
-    parser.add_argument('--batch_size', type=int, help='batch_size of input feature', default=500)
-    parser.add_argument('--bed', type=str, help='bed file used to extract sequence')
-    parser.add_argument('--subsample_number', type=int, help='Subsample number if required', default=None)
-    parser.add_argument('--device', type=str, help='Device name', default='cpu')
-    args = parser.parse_args()
-    main(args.input_folder, args.model, args.bed, args.output, args.batch_size, args.device, args.subsample_number)
+    main(args.input_folder, args.model, args.bed, args.output, args.batch_size, args.len, args.device, args.subsample_number)
+
 
 
