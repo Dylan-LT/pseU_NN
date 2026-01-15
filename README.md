@@ -95,7 +95,7 @@ The output of `predictor.py` and `scanner.sh` is in .**csv** format containing t
 We have included sample data to facilitate testing and comprehension of our script.
 ```
 # run predictor.py
-python predictor.py -i data/test1/bpseq/ --bed data/test1/test.bed -o data/test1/test --device cuda:0 --len 30 --model model61nt.pth
+python predictor.py -i data/test1/bpseq/ --bed data/test1/test.bed -o data/test1/test --device cuda:0 --len 30 --model weight/trained_model61nt.pth
 # run scanner.sh
-bash scanner.sh data/test2/fasta.fa data/test2/genomic.gff data/test2/results.csv model41nt.pth 20
+bash scanner.sh data/test2/fasta.fa data/test2/genomic.gff data/test2/results.csv weight/trained_model41nt.pth 20
 ```
