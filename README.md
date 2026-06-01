@@ -1,5 +1,5 @@
 # pseU_NN
-The code for computational implementation of "Quantitative RNA pseudouridine landscape reveals dynamic modification patterns and evolutionary conservation across bacterial species" A LSTM-transformer-GNN architecture that integrates RNA secondary structural features with sequence information to predict potential pseudouridine (Ψ) modifications in bacterial transcriptomes.
+The code for computational implementation of "Quantitative RNA pseudouridine landscape reveals dynamic modification patterns and evolutionary conservation across bacterial species". A LSTM-transformer-GNN architecture that integrates RNA secondary structural features with sequence information to predict potential pseudouridine (Ψ) modifications in bacterial transcriptomes.
 
 ## Workflow
 
