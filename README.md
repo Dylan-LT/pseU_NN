@@ -33,11 +33,11 @@ We provide two scripts for predicting pseudouridine modifications, depending on 
 * **`predictor.py`:** Designed to predict modifications from pre-computed RNA secondary structure files in `.bpseq` format.
 
 ### Input files preparation
-The input files required by `predictor.py` are directories containing RNA secondary structure files in **BPSEQ** format named sequence_1.bpseq to sequence_n.bpseq (optional information file: in .**bed** format with exact same order of file in input directory). 
+The input files required by `predictor.py` are directories containing RNA secondary structure files in `.bpseq` format named sequence_1.bpseq to sequence_n.bpseq (optional information file: in `.bed` format with exact same order of file in input directory). 
 ```
 NZ_CP040539.1   352254  352255  .       .       +
 ```
-The input files for `scanner.sh` are a **genome sequence reference** file (in .**fa**, .**fasta**, or .**fna** format) and an **annotation** file (in .**gff** format). 
+The input files for `scanner.sh` are a **genome sequence reference** file (in .**fa**, .**fasta**, or .**fna** format) and an **annotation** file (in `.gff` format). 
 
 ### Command options
 The `predictor.py` module calculates the probability of **61-nucleotide** RNA segment containing pseudouridine modifications.
