@@ -1,5 +1,5 @@
 # pseU_NN
-A hybrid transformer-GNN architecture that integrates RNA secondary structural features with sequence information to predict potential pseudouridine (Ψ) modifications in bacterial transcriptomes.
+The code for computational implementation of "Quantitative RNA pseudouridine landscape reveals dynamic modification patterns and evolutionary conservation across bacterial species" A LSTM-transformer-GNN architecture that integrates RNA secondary structural features with sequence information to predict potential pseudouridine (Ψ) modifications in bacterial transcriptomes.
 
 ## Workflow
 
@@ -25,8 +25,12 @@ cd pseU_NN/
 pip install -r requirement.txt
 ```
 
-## Manual
-We have provided two scripts: `predictor.py` and `scanner.sh`. The `predictor.py` script is designed to predict secondary structure files in bpseq format. The `scanner.sh` script is intended to process sequences directly (**recommended method**).
+## Usage Manual
+
+We provide two scripts for predicting pseudouridine modifications, depending on your input data type:
+
+* **`scanner.sh` (Recommended):** Designed to process raw RNA sequences directly. This is the easiest and most streamlined method.
+* **`predictor.py`:** Designed to predict modifications from pre-computed RNA secondary structure files in `.bpseq` format.
 
 ### Input files preparation
 The input files required by `predictor.py` are directories containing RNA secondary structure files in **BPSEQ** format named sequence_1.bpseq to sequence_n.bpseq (optional information file: in .**bed** format with exact same order of file in input directory). 
